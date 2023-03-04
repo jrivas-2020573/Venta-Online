@@ -1,8 +1,8 @@
 const {Router} = require('express');
 const {check} = require('express-validator');
-const { getProductos, postProducto, putProducto, deleteProducto } = require('../controllers/producto');
+const { getProductos, postProducto, putProducto, deleteProducto, getProductosMasVendidos } = require('../controllers/producto');
 
-const {existeUsuarioPorId, existeProductoPorId} = require('../helpers/db-validators');
+const {existeProductoPorId, existeCategoriaPorId} = require('../helpers/db-validators');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { esAdminRole } = require('../middlewares/validar-roles');
@@ -11,18 +11,23 @@ const router = Router();
 
 router.get('/mostrar', getProductos);
 
+// router.get('/masVendidos', getProductosMasVendidos);
+
 router.post('/agregar', [
+    validarJWT,
+    esAdminRole,
     check('nombre', 'El nombre no puede ir vacio').not().isEmpty(),
-    check('nombre', 'El nombre no acepta numeros').isString(),
-    check('stock', 'El stock no puede ir vacio').not().isEmpty(),
-    check('stock', 'El campo solo acepta numeros').isInt(),
+    check('categoria').custom( existeCategoriaPorId),
     validarCampos
 ], postProducto);
 
 router.put('/editar/:id',[
+    validarJWT,
+    esAdminRole,
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom(existeProductoPorId),
-    check('stock', 'El tock solo acepta numeros').isInt(),
+    check('categoria').custom( existeCategoriaPorId ),
+    check('nombre', 'El nombre del producto es obligatorio').not().isEmpty(),
     validarCampos
 ], putProducto);
 

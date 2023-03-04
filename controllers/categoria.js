@@ -16,8 +16,8 @@ const getCategorias = async (req = request, res = response) => {
 
 const postCategoria = async (req = request, res = response) => {
 
-    const {nombre, proveedor} = req.body;
-    const categoriaDB = new Categoria({nombre, proveedor});
+    const {nombre} = req.body;
+    const categoriaDB = new Categoria({nombre});
 
     await categoriaDB.save();
 

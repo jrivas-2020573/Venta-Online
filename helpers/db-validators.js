@@ -12,11 +12,20 @@ const emailExiste = async( correo = '' ) => {
     }
 }
 
+const categoriaExiste = async( nombre = '') => {
+    const existeCategoria = await Categoria.findOne( { nombre } );
+    if ( existeCategoria) {
+        throw new Error(`La categoria ${ nombre }, ya esta registrado en la DB `);
+    }
+}
+
 const esRoleValido = async( rol = '') => {
     //Verificar si el rol es valido y existe en la DB
-    const existeRolDB = await Role.findOne( { rol } );
-    if ( !existeRolDB ) {
-        throw new Error(`El rol ${ rol }, no existe en la DB `);
+    if (rol != "") {
+        const existeRolDB = await Role.findOne( { rol } );
+        if ( !existeRolDB ) {
+            throw new Error(`El rol ${ rol }, no existe en la DB `);
+        }  
     }
 }
 
@@ -50,10 +59,12 @@ const existeProductoPorId = async( id ) => {
 }
 
 
+
 module.exports = {
     emailExiste,
     esRoleValido,
     existeUsuarioPorId,
     existeCategoriaPorId,
-    existeProductoPorId
+    existeProductoPorId,
+    categoriaExiste
 }

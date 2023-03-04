@@ -17,11 +17,13 @@ const UsuarioSchema = Schema({
     rol: {
         type: String,
         required: true,
-        //emun: ['ADMIN_ROLE', 'USER_ROLE']
     },
     estado: {
         type: Boolean,
         default: true
+    },
+    facturas: {
+        type: Array
     }
 });
 

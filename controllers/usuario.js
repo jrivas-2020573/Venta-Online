@@ -25,8 +25,12 @@ const getUsuarios = async (req = request, res = response) => {
 
 const postUsuario = async (req = request, res = response) => {
 
-    const { nombre, correo, password, rol } = req.body;
-    const usuarioDB = new Usuario({ nombre, correo, password, rol });
+    if (req.body.rol == "") {
+        req.body.rol = "CLIENT"
+    }
+
+    const { nombre, correo, password, rol,facturas } = req.body;
+    const usuarioDB = new Usuario({ nombre, correo, password, rol, facturas });
 
     //Encriptar password
     const salt = bcryptjs.genSaltSync();
@@ -43,6 +47,9 @@ const postUsuario = async (req = request, res = response) => {
 }
 
 const putUsuario = async (req = request, res = response) => {
+    if (req.body.rol == "") {
+        req.body.rol = "CLIENT"
+    }
 
     const { id } = req.params;
 
@@ -60,7 +67,6 @@ const putUsuario = async (req = request, res = response) => {
         msg: 'PUT API de usuario',
         usuarioEditado
     });
-
 }
 
 
@@ -83,11 +89,22 @@ const deleteUsuario = async (req = request, res = response) => {
 
 }
 
+const getMyFacturas = async (req= request, res = response) => {
+    const usuario = req.usuario._id;
+    const facturas = req.usuario.facturas
+
+    res.json({
+        msg: 'Tus Facturas',
+        facturas
+    })
+}
+
 
 
 module.exports = {
     getUsuarios,
     postUsuario,
     putUsuario,
-    deleteUsuario
+    deleteUsuario,
+    getMyFacturas
 }
