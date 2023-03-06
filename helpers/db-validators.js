@@ -12,6 +12,13 @@ const emailExiste = async( correo = '' ) => {
     }
 }
 
+const existeProducto = async( nombre = '') => {
+    const existeProducto = await Producto.findOne({nombre});
+    if (existeProducto) {
+        throw new Error(`El producto ${ nombre }, ya esta registrado en la DB `);
+    }
+}
+
 const categoriaExiste = async( nombre = '') => {
     const existeCategoria = await Categoria.findOne( { nombre } );
     if ( existeCategoria) {
@@ -66,5 +73,6 @@ module.exports = {
     existeUsuarioPorId,
     existeCategoriaPorId,
     existeProductoPorId,
-    categoriaExiste
+    categoriaExiste,
+    existeProducto
 }

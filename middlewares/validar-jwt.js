@@ -29,11 +29,11 @@ const validarJWT = async( req = request, res = response, next ) => {
         }
 
         //Verificar si el uid esta en estado: true
-        if ( !usuario.estado ) {
-            return res.status(401).json({
-                msg: 'Token no válido - Usuario inactivo : Estado FALSE'
-            });
-        }
+        // if ( !usuario.estado ) {
+        //     return res.status(401).json({
+        //         msg: 'Token no válido - Usuario inactivo : Estado FALSE'
+        //     });
+        // }
 
         req.usuario = usuario;
         next();

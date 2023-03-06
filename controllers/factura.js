@@ -1,7 +1,8 @@
 const { response, request } = require('express');
-const Factura = require('../models/factura');
 const Producto = require('../models/producto');
 const Usuario = require('../models/usuario');
+
+
 
 const AgregarProductos = async (req = request, res = response) =>{
     const {idProducto} = req.params;
@@ -37,29 +38,7 @@ const AgregarProductos = async (req = request, res = response) =>{
     })
 }
 
-// const obtenerFacturaPorID = async(req = request, res = response) => {
-
-//     const { id } = req.params;
-//     const producto = await Factura.findById(id)
-//                                                 .populate('usuario', 'nombre')
-//                                                 .populate('productos', 'nombre');
-
-//     res.json({
-//         msg: 'Producto por ID',
-//         producto
-//     });
-// }
-
-// const eliminarFactura = async (req = request, res = response) => {
-//     const {idFactura} = req.params;
-//     const existeFactura = await Factura.findOne({_id: idFactura});
-//     const producto = existeFactura.productos;
-//     const user = existeFactura.usuario;
-    
-//     const facturaEliminada = await Factura.findByIdAndDelete(id);
-// }
 
 module.exports = {
-    AgregarProductos,
-    // obtenerFacturaPorID
+    AgregarProductos
 }

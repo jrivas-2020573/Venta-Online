@@ -15,19 +15,18 @@ const getProductos = async(req = request, res = response) => {
     });
 }
 
-// getProductosMasVendidos = async( req = request, res = response) => {
-//         const query = {stock: 5}
+const ProductosNoAviable = async(req = request, res = response) => {
+    const query = { stock: false };
 
-//         const listaProdcutos = await Promise.all([
-//             Producto.countDocuments(query),
-//             Producto.find(query).populate('categoria', 'nombre')
-//         ]);
-    
-//         res.json({
-//             listaProdcutos
-//         });
-    
-// }
+    const listaProdcutos = await Promise.all([
+        Producto.countDocuments(query),
+        Producto.find(query).populate('categoria', 'nombre')
+    ]);
+
+    res.json({
+        listaProdcutos
+    });
+}
 
 const postProducto = async(req = request, res = response) => {
     const { stock, ...body} = req.body;
@@ -41,8 +40,7 @@ const postProducto = async(req = request, res = response) => {
     }
 
     const data = {
-        ...body,
-        nombre: body.nombre.toUpperCase()
+        ...body
     }
 
     const producto = new Producto(data);
@@ -56,10 +54,6 @@ const postProducto = async(req = request, res = response) => {
 const putProducto = async (req = request, res = response) => {
     const {id} = req.params;
     const {_id, stock,...Data} = req.body;
-
-    if (Data.nombre) {
-        Data.nombre = Data.nombre.toUpperCase();
-    }
 
     const producto = await Producto.findByIdAndUpdate(id, Data, {new: true});
 
@@ -75,10 +69,20 @@ const deleteProducto = async (req = request, res = response) => {
     const ProductoBorrado = await Producto.findByIdAndUpdate(id, {stock: false}, {new: true});
 
     res.json({
-        msg: 'delete producto',
+        msg: 'Producto no disponible',
         ProductoBorrado
     });
+}
 
+const activarProducto = async (req = request, res = response) => {
+
+    const { id } = req.params;
+    const ProductoBorrado = await Producto.findByIdAndUpdate(id, {stock: true}, {new: true});
+
+    res.json({
+        msg: 'Producto ya disponile',
+        ProductoBorrado
+    });
 }
 
 
@@ -88,5 +92,6 @@ module.exports = {
     postProducto,
     putProducto,
     deleteProducto,
-    // getProductosMasVendidos
+    activarProducto,
+    ProductosNoAviable
 }

@@ -18,10 +18,6 @@ const UsuarioSchema = Schema({
         type: String,
         required: true,
     },
-    estado: {
-        type: Boolean,
-        default: true
-    },
     facturas: {
         type: Array
     }
