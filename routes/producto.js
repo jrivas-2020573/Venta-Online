@@ -19,7 +19,8 @@ router.get('/productoPorNombre', [
 router.get('/productosPorCategoria/:idCategoria', getProductosPorCategoria);
 
 router.get('/mostrarAgotados',[
-esAdminRole
+    validarJWT,
+    esAdminRole
 ], ProductosNoAviable);
 
 router.post('/agregar', [
