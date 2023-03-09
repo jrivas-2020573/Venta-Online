@@ -15,6 +15,30 @@ const getProductos = async(req = request, res = response) => {
     });
 }
 
+const getProductoPorNombre = async(req = request, res = response) =>{
+    const {nombre} = req.body;
+
+    const producto = await Producto.findOne({nombre}).populate('categoria', 'nombre')
+
+    res.json({
+        producto
+    })
+}
+
+const getProductosPorCategoria = async(req = request, res = response) => {
+    const {idCategoria} = req.params; 
+    const query = { categoria: idCategoria }
+    
+    const listaProdcutos = await Promise.all([
+        Producto.countDocuments(query),
+        Producto.find(query).populate('categoria', 'nombre')
+    ]);
+
+    res.json({
+        listaProdcutos
+    })
+}
+
 const ProductosNoAviable = async(req = request, res = response) => {
     const query = { estado: false };
 
@@ -97,5 +121,7 @@ module.exports = {
     putProducto,
     deleteProducto,
     activarProducto,
-    ProductosNoAviable
+    ProductosNoAviable,
+    getProductoPorNombre,
+    getProductosPorCategoria
 }

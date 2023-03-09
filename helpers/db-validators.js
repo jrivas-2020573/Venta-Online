@@ -36,6 +36,13 @@ const esRoleValido = async( rol = '') => {
     }
 }
 
+const esProductoValido = async(nombre = '') => {
+    const existeProductDB = await Producto.findOne({nombre});
+    if (!existeProductDB){
+        throw new Error(`El producto ${ nombre }, no existe en la DB `);
+    }
+}
+
 
 const existeUsuarioPorId = async( id ) => {
 
@@ -74,5 +81,6 @@ module.exports = {
     existeCategoriaPorId,
     existeProductoPorId,
     categoriaExiste,
-    existeProducto
+    existeProducto,
+    esProductoValido
 }

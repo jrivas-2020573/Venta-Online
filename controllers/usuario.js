@@ -45,11 +45,15 @@ const postUsuario = async (req = request, res = response) => {
 }
 
 const putUsuario = async (req = request, res = response) => {
-    const {rol} = req.usuario
-    const {nombre} = req.body;
+    if (req.body.rol == "") {
+        req.body.rol = "CLIENT"
+    }
+
+    const {rol,nombre} = req.usuario
+    // const {nombre} = req.body;
     if (rol !== 'ADMIN') {
         return res.status(401).json({
-            msg: `${nombre} es un admin, no puedes editar sus datos siendo cliente`
+            msg: `${nombre} no es admin asi que no puedes editar los datos de un admin`
         });
     }else{
         const { id } = req.params;
@@ -97,7 +101,7 @@ const putShopCar = async ( req = request, res = response) => {
         usuario: req.usuario._id
     }
 
-    const agregarProducto = await Usuario.updateOne(
+    const agregarProducto = await Usuario.findOneAndUpdate(
         {_id: data.usuario},
         {$push: { carrito: req.body.producto }},
         {new : true}
@@ -109,7 +113,7 @@ const putShopCar = async ( req = request, res = response) => {
         const producto = await Producto.findOne({_id: ShopCarProduct})
         totalShopCar = totalShopCar + producto.precio
     }
-    const totalUser = await Usuario.updateOne(
+    const totalUser = await Usuario.findOneAndUpdate(
         {_id: data.usuario},
         {total: totalShopCar},
         {new: true}
