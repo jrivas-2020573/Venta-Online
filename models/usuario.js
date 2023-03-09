@@ -18,8 +18,12 @@ const UsuarioSchema = Schema({
         type: String,
         required: true,
     },
-    facturas: {
-        type: Array
+    carrito: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Producto'
+    }],
+    total: {
+        type: Number
     }
 });
 

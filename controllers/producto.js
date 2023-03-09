@@ -3,7 +3,7 @@ const {response, request} = require('express');
 const Producto = require('../models/producto');
 
 const getProductos = async(req = request, res = response) => {
-    const query = { stock: true };
+    const query = { estado: true };
 
     const listaProdcutos = await Promise.all([
         Producto.countDocuments(query),
@@ -16,7 +16,7 @@ const getProductos = async(req = request, res = response) => {
 }
 
 const ProductosNoAviable = async(req = request, res = response) => {
-    const query = { stock: false };
+    const query = { estado: false };
 
     const listaProdcutos = await Promise.all([
         Producto.countDocuments(query),
@@ -29,7 +29,7 @@ const ProductosNoAviable = async(req = request, res = response) => {
 }
 
 const postProducto = async(req = request, res = response) => {
-    const { stock, ...body} = req.body;
+    const { estado, ...body} = req.body;
     
     const productoEnDB = await Producto.findOne({nombre: body.nombre});
 
@@ -40,7 +40,8 @@ const postProducto = async(req = request, res = response) => {
     }
 
     const data = {
-        ...body
+        ...body,
+        nombre: body.nombre.toUpperCase(),
     }
 
     const producto = new Producto(data);
@@ -53,20 +54,23 @@ const postProducto = async(req = request, res = response) => {
 
 const putProducto = async (req = request, res = response) => {
     const {id} = req.params;
-    const {_id, stock,...Data} = req.body;
+    const {_id, estado,...Data} = req.body;
 
-    const producto = await Producto.findByIdAndUpdate(id, Data, {new: true});
+    if (Data.nombre) {
+        Data.nombre = Data.nombre.toUpperCase();
+    }
+
+    const productoEdited = await Producto.findByIdAndUpdate(id, Data, {new: true});
 
     res.json({
-        msg: 'Put producto',
-        producto
+        productoEdited
     });
 }
 
 const deleteProducto = async (req = request, res = response) => {
 
     const { id } = req.params;
-    const ProductoBorrado = await Producto.findByIdAndUpdate(id, {stock: false}, {new: true});
+    const ProductoBorrado = await Producto.findByIdAndUpdate(id, {estado: false}, {new: true});
 
     res.json({
         msg: 'Producto no disponible',
@@ -77,7 +81,7 @@ const deleteProducto = async (req = request, res = response) => {
 const activarProducto = async (req = request, res = response) => {
 
     const { id } = req.params;
-    const ProductoBorrado = await Producto.findByIdAndUpdate(id, {stock: true}, {new: true});
+    const ProductoBorrado = await Producto.findByIdAndUpdate(id, {estado: true}, {new: true});
 
     res.json({
         msg: 'Producto ya disponile',

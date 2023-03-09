@@ -18,6 +18,8 @@ router.post('/agregar', [
     esAdminRole,
     check('nombre', 'El nombre no puede ir vacio').not().isEmpty(),
     check('nombre').custom(existeProducto),
+    check('precio','tienes que colocar un numero para el precio').isInt(),
+    check('stock','tienes que coloar un numero para el stock').isInt(),
     check('categoria', 'La categoria no puede ir vacia').not().isEmpty(),
     check('categoria', 'No es un id valido').isMongoId(),
     validarCampos
@@ -30,6 +32,8 @@ router.put('/editar/:id',[
     check('id').custom(existeProductoPorId),
     check('categoria', 'La categoria no puede ir vacia').not().isEmpty(),
     check('categoria', 'No es un id valido').isMongoId(),
+    check('precio','tienes que colocar un numero para el precio').isInt(),
+    check('stock','tienes que colocar un numero para el stock').isInt(),
     check('nombre', 'El nombre del producto es obligatorio').not().isEmpty(),
     validarCampos
 ], putProducto);

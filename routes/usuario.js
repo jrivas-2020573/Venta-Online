@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { getUsuarios, postUsuario, putUsuario, deleteUsuario, getMyFacturas } = require('../controllers/usuario');
+const { getUsuarios, postUsuario, putUsuario, deleteUsuario, putShopCar, getShopCar, putProductShopCar, EmptyShopCar } = require('../controllers/usuario');
 const { emailExiste, esRoleValido, existeUsuarioPorId } = require('../helpers/db-validators');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
@@ -41,9 +41,22 @@ router.delete('/eliminar/:id', [
     validarCampos
 ] ,deleteUsuario);
 
-router.get('/MyFacturas', [
+router.put('/shopCar', [
     validarJWT
-], getMyFacturas);
+], putShopCar);
+
+router.get('/mostrarShopCar/:id', [
+    validarJWT
+], getShopCar);
+
+router.put('/shopCarDelete/:id', [
+    validarJWT
+], putProductShopCar);
+
+router.put('/vaciarShopCar', [
+    validarJWT
+], EmptyShopCar);
+
 
 
 module.exports = router;

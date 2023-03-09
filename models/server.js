@@ -12,7 +12,6 @@ class Server {
         this.categoriaPath = '/api/categorias';
         this.usuarioPath = '/api/usuarios';
         this.productoPath = '/api/productos';
-        this.facturaPath = '/api/facturas';
 
         //Conectar a base de datos
         this.conectarDB();
@@ -50,9 +49,7 @@ class Server {
         this.app.use( this.authPath , require('../routes/auth') );
         this.app.use(this.categoriaPath, require('../routes/categoria'));
         this.app.use( this.usuarioPath , require('../routes/usuario') );
-        this.app.use(this.productoPath, require('../routes/producto'));
-        this.app.use(this.facturaPath, require('../routes/factura'));
-        
+        this.app.use(this.productoPath, require('../routes/producto')); 
     }
 
 
