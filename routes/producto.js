@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const {check} = require('express-validator');
+const { getFacturasUsuario, generarFactura } = require('../controllers/factura');
 const { getProductos, postProducto, putProducto, deleteProducto, activarProducto, ProductosNoAviable, getProductoPorId, getProductoPorNombre, getProductosPorCategoria } = require('../controllers/producto');
 
 const {existeProductoPorId, existeProducto, esProductoValido} = require('../helpers/db-validators');
@@ -8,6 +9,12 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 const { esAdminRole } = require('../middlewares/validar-roles');
 
 const router = Router();
+
+router.get('/facturas',[validarJWT,], getFacturasUsuario);
+
+router.post('/comprar', [
+    validarJWT,
+], generarFactura);
 
 router.get('/mostrar', getProductos);
 

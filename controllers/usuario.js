@@ -23,10 +23,6 @@ const getUsuarios = async (req = request, res = response) => {
 
 const postUsuario = async (req = request, res = response) => {
 
-    if (req.body.rol == "") {
-        req.body.rol = "CLIENT"
-    }
-
     const { nombre, correo, password, rol } = req.body;
     const usuarioDB = new Usuario({ nombre, correo, password, rol });
 
@@ -44,18 +40,30 @@ const postUsuario = async (req = request, res = response) => {
 
 }
 
-const putUsuario = async (req = request, res = response) => {
-    if (req.body.rol == "") {
-        req.body.rol = "CLIENT"
-    }
+const PostCliente = async (req = request, res = response) => {
+ 
+    req.body.rol = "CLIENT"
+  
 
-    const {rol,nombre} = req.usuario
-    // const {nombre} = req.body;
-    if (rol !== 'ADMIN') {
-        return res.status(401).json({
-            msg: `${nombre} no es admin asi que no puedes editar los datos de un admin`
-        });
-    }else{
+   const { nombre, correo, password, rol } = req.body;
+   const usuarioDB = new Usuario({ nombre, correo, password, rol });
+
+
+   const salt = bcryptjs.genSaltSync();
+   usuarioDB.password = bcryptjs.hashSync(password, salt);
+   await usuarioDB.save();
+
+
+
+   res.status(201).json({
+       msg: 'Post api',
+       usuarioDB
+   })
+
+}
+
+const putUsuario = async (req = request, res = response) => {
+
         const { id } = req.params;
     
         //Ignoramos el _id al momento de editar y mandar la petición en el req.body
@@ -72,19 +80,33 @@ const putUsuario = async (req = request, res = response) => {
             msg: 'PUT API de usuario',
             usuarioEditado
         });
+}
+
+const PutCliente = async (req = request, res = response) => {
+    const {id} = req.params;
+    const usuario = req.usuario._id;
+    const idUsuario = usuario.toString();
+
+    if (id === idUsuario) {
+        const {_id, role,...resto} = req.body;
+        const salt = bcryptjs.genSaltSync();
+        resto.password = bcryptjs.hashSync(resto.password, salt);
+        const usuarioEditado = await Usuario.findByIdAndUpdate(id, resto, {new: true});
+        res.status(200).json({
+            msg: 'usuario actualizado',
+            usuarioEditado
+        })
+    } else{
+        res.status(401).json({
+            msg: 'solo puedes borrar tu usuario'
+
+        })
     }
 
 }
 
 
 const deleteUsuario = async (req = request, res = response) => {
-
-    const {rol, nombre} = req.usuario
-    if (rol !== 'ADMIN') {
-        return res.status(401).json({
-            msg: `${nombre} es un cliente, no puede eliminar los datos de un admin`
-        });
-    }else{
         const { id } = req.params;
     
         const usuarioEliminado = await Usuario.findByIdAndDelete(id);
@@ -93,7 +115,28 @@ const deleteUsuario = async (req = request, res = response) => {
             msg: 'DELETE API de usuario',
             usuarioEliminado
         });
+}
+
+const borrarCliente = async(req = request, res = response) => {
+    const {id} = req.params;
+   
+    const usuario = req.usuario._id;
+
+    const idUsuario = usuario.toString();
+
+    if(id === idUsuario){
+        const usuarioEliminado = await Usuario.findByIdAndDelete(id);
+        res.status(200).json({
+            msg: 'usuario borrado',
+            usuarioEliminado
+        })
+    }else{
+        res.status(401).json({
+            msg: 'no puedes borrar cuentas de alguien mas'
+
+        })
     }
+    
 }
 
 const putShopCar = async ( req = request, res = response) => {
@@ -214,5 +257,8 @@ module.exports = {
     putShopCar,
     putProductShopCar,
     EmptyShopCar,
-    getShopCar
+    getShopCar,
+    PutCliente,
+    PostCliente,
+    borrarCliente
 }

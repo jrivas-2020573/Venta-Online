@@ -73,10 +73,23 @@ const deleteCategoria = async(req = request, res = response) => {
     });
 }
 
+const CategoriaDefault = async(req = request, res = response) => {
+    let data = {
+        nombre: 'Default',
+        descripcion: 'Default categoria'
+    }
+    let existeCategoria = await Categoria.findOne({nombre: 'Default'});
+    if(existeCategoria) return console.log('Default ya esta creado');
+    let defCategory = new Categoria(data);
+    await defCategory.save();
+    return console.log('Categoria default creada');
+}
+
 module.exports = {
     getCategorias,
     getCategoriaId,
     postCategoria,
     putCategoria,
-    deleteCategoria
+    deleteCategoria,
+    CategoriaDefault
 }
