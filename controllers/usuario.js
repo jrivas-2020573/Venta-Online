@@ -40,27 +40,27 @@ const postUsuario = async (req = request, res = response) => {
 
 }
 
-const PostCliente = async (req = request, res = response) => {
+// const PostCliente = async (req = request, res = response) => {
  
-    req.body.rol = "CLIENT"
+//     req.body.rol = "CLIENT"
   
 
-   const { nombre, correo, password, rol } = req.body;
-   const usuarioDB = new Usuario({ nombre, correo, password, rol });
+//    const { nombre, correo, password, rol } = req.body;
+//    const usuarioDB = new Usuario({ nombre, correo, password, rol });
 
 
-   const salt = bcryptjs.genSaltSync();
-   usuarioDB.password = bcryptjs.hashSync(password, salt);
-   await usuarioDB.save();
+//    const salt = bcryptjs.genSaltSync();
+//    usuarioDB.password = bcryptjs.hashSync(password, salt);
+//    await usuarioDB.save();
 
 
 
-   res.status(201).json({
-       msg: 'Post api',
-       usuarioDB
-   })
+//    res.status(201).json({
+//        msg: 'Post api',
+//        usuarioDB
+//    })
 
-}
+// }
 
 const putUsuario = async (req = request, res = response) => {
 
@@ -82,28 +82,28 @@ const putUsuario = async (req = request, res = response) => {
         });
 }
 
-const PutCliente = async (req = request, res = response) => {
-    const {id} = req.params;
-    const usuario = req.usuario._id;
-    const idUsuario = usuario.toString();
+// const PutCliente = async (req = request, res = response) => {
+//     const {id} = req.params;
+//     const idUsuario = req.usuario._id;
+//     // const idUsuario = usuario.toString();
 
-    if (id === idUsuario) {
-        const {_id, role,...resto} = req.body;
-        const salt = bcryptjs.genSaltSync();
-        resto.password = bcryptjs.hashSync(resto.password, salt);
-        const usuarioEditado = await Usuario.findByIdAndUpdate(id, resto, {new: true});
-        res.status(200).json({
-            msg: 'usuario actualizado',
-            usuarioEditado
-        })
-    } else{
-        res.status(401).json({
-            msg: 'solo puedes borrar tu usuario'
+//     if (id === idUsuario) {
+//         const {_id, role,...resto} = req.body;
+//         const salt = bcryptjs.genSaltSync();
+//         resto.password = bcryptjs.hashSync(resto.password, salt);
+//         const usuarioEditado = await Usuario.findByIdAndUpdate(id, resto, {new: true});
+//         res.status(200).json({
+//             msg: 'usuario actualizado',
+//             usuarioEditado
+//         })
+//     } else{
+//         res.status(401).json({
+//             msg: 'solo puedes editar tu usuario'
 
-        })
-    }
+//         })
+//     }
 
-}
+// }
 
 
 const deleteUsuario = async (req = request, res = response) => {
@@ -117,27 +117,27 @@ const deleteUsuario = async (req = request, res = response) => {
         });
 }
 
-const borrarCliente = async(req = request, res = response) => {
-    const {id} = req.params;
+// const borrarCliente = async(req = request, res = response) => {
+//     const {id} = req.params;
    
-    const usuario = req.usuario._id;
+//     const usuario = req.usuario._id;
 
-    const idUsuario = usuario.toString();
+//     const idUsuario = usuario.toString();
 
-    if(id === idUsuario){
-        const usuarioEliminado = await Usuario.findByIdAndDelete(id);
-        res.status(200).json({
-            msg: 'usuario borrado',
-            usuarioEliminado
-        })
-    }else{
-        res.status(401).json({
-            msg: 'no puedes borrar cuentas de alguien mas'
+//     if(id === idUsuario){
+//         const usuarioEliminado = await Usuario.findByIdAndDelete(id);
+//         res.status(200).json({
+//             msg: 'usuario borrado',
+//             usuarioEliminado
+//         })
+//     }else{
+//         res.status(401).json({
+//             msg: 'no puedes borrar cuentas de alguien mas'
 
-        })
-    }
+//         })
+//     }
     
-}
+// }
 
 const putShopCar = async ( req = request, res = response) => {
     const data = {
@@ -258,7 +258,7 @@ module.exports = {
     putProductShopCar,
     EmptyShopCar,
     getShopCar,
-    PutCliente,
-    PostCliente,
-    borrarCliente
+    // PutCliente,
+    // PostCliente,
+    // borrarCliente
 }

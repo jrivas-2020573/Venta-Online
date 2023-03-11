@@ -1,7 +1,7 @@
 const { response, request } = require('express');
 
-const Factura = require('../models/facturaModel');
-const Usuario = require('../models/usuarioModel');
+const Factura = require('../models/factura');
+const Usuario = require('../models/usuario');
 
 
 
@@ -41,7 +41,7 @@ const generarFactura = async (req = request, res = response) => {
 
 
     res.json({
-        msg: 'Gracias por su compra >:D',
+        msg: 'Gracias por su compra',
         miFactura
     })
 

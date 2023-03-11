@@ -57,23 +57,22 @@ router.put('/vaciarShopCar', [
     validarJWT
 ], EmptyShopCar);
 
-router.delete('/deleteCuenta/:id', [
-    validarJWT,
-    check('id', "id de mongo no existe").isMongoId(),
-    check('id').custom(existIdOfUser),
-    validarCampos
-], borrarCliente);
+// router.delete('/deleteCuenta/:id', [
+//     validarJWT,
+//     check('id', "id de mongo no existe").isMongoId(),
+//     validarCampos
+// ], borrarCliente);
 
-router.put('/editarCliente/:id', [validarCampos], PutCliente);
+// router.put('/editarCliente/:id', [validarCampos], PutCliente);
 
-router.post('/agregarCliente', [
-    check('nombre', 'el nombre es obligatorio para agregar').not().isEmpty(),
-    check('password', 'el password es obligatorio').not().isEmpty(),
-    check('password', 'la contrase;a minimo tienen que ser 6 caracteres').isLength({ min: 6 }),
-    check('correo', 'El correo no es correcto').isEmail(),
-    check('correo').custom(emailExiste),
-    validarCampos
-], PostCliente);
+// router.post('/agregarCliente', [
+//     check('nombre', 'el nombre es obligatorio para agregar').not().isEmpty(),
+//     check('password', 'el password es obligatorio').not().isEmpty(),
+//     check('password', 'la contrase;a minimo tienen que ser 6 caracteres').isLength({ min: 6 }),
+//     check('correo', 'El correo no es correcto').isEmail(),
+//     check('correo').custom(emailExiste),
+//     validarCampos
+// ], PostCliente);
 
 
 

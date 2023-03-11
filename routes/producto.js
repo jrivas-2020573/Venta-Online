@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const {check} = require('express-validator');
 const { getFacturasUsuario, generarFactura } = require('../controllers/factura');
-const { getProductos, postProducto, putProducto, deleteProducto, activarProducto, ProductosNoAviable, getProductoPorId, getProductoPorNombre, getProductosPorCategoria } = require('../controllers/producto');
+const { getProductos, postProducto, putProducto, deleteProducto, activarProducto, ProductosNoAviable,getProductoPorNombre, getProductosPorCategoria } = require('../controllers/producto');
 
 const {existeProductoPorId, existeProducto, esProductoValido} = require('../helpers/db-validators');
 const { validarCampos } = require('../middlewares/validar-campos');

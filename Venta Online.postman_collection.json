@@ -255,32 +255,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Buy",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "x-token",
-								"value": "",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "localhost:4000/api/producto/comprar",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"api",
-								"producto",
-								"comprar"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -472,7 +446,7 @@
 						"header": [
 							{
 								"key": "x-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDBhNTI2NWUwYjY2NDFiZjA3ZDUxNTciLCJpYXQiOjE2NzgzOTgxNTYsImV4cCI6MTY3ODQwMTc1Nn0.pBU1irC8ozDVvCHROC8zxiKxDziT9jUYsI-zlutMfGw",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDBhNTI2NWUwYjY2NDFiZjA3ZDUxNTciLCJpYXQiOjE2Nzg1MDI1MjcsImV4cCI6MTY3ODUwNjEyN30.7XekD6L3FSJNptgc6temwAA9GNecQu7NSlvjKFg7mEQ",
 								"type": "default"
 							}
 						],
@@ -540,13 +514,13 @@
 						"header": [
 							{
 								"key": "x-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDBhNTI2NWUwYjY2NDFiZjA3ZDUxNTciLCJpYXQiOjE2NzgzOTgzODIsImV4cCI6MTY3ODQwMTk4Mn0.ljYI_7037OCaoKHe_kBWciBpy_KvTC8ArJR0cL8yeVk",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDBhNTI2NWUwYjY2NDFiZjA3ZDUxNTciLCJpYXQiOjE2Nzg1MDM0MDIsImV4cCI6MTY3ODUwNzAwMn0.Ev_Osxu5utgrZGK-YYKgv4f7DWMz30Eiur6jz1EP_lY",
 								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"producto\": \"640a5470e0b6641bf07d519e\"\r\n}",
+							"raw": "{\r\n    \"producto\": \"640a542ae0b6641bf07d5194\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -569,13 +543,13 @@
 					"response": []
 				},
 				{
-					"name": "Get Factura de User",
+					"name": "Mostrar ShopCar",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "x-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDBhNTI2NWUwYjY2NDFiZjA3ZDUxNTciLCJpYXQiOjE2NzgzOTgzODIsImV4cCI6MTY3ODQwMTk4Mn0.ljYI_7037OCaoKHe_kBWciBpy_KvTC8ArJR0cL8yeVk",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDBhNTI2NWUwYjY2NDFiZjA3ZDUxNTciLCJpYXQiOjE2Nzg1MDM0MDIsImV4cCI6MTY3ODUwNzAwMn0.Ev_Osxu5utgrZGK-YYKgv4f7DWMz30Eiur6jz1EP_lY",
 								"type": "default"
 							}
 						],
@@ -663,7 +637,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"correo\": \"victor@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"raw": "{\r\n    \"correo\": \"juan@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -680,6 +654,58 @@
 						"api",
 						"auth",
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mostrar facturas",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDBhNTI2NWUwYjY2NDFiZjA3ZDUxNTciLCJpYXQiOjE2Nzg1MDM0MDIsImV4cCI6MTY3ODUwNzAwMn0.Ev_Osxu5utgrZGK-YYKgv4f7DWMz30Eiur6jz1EP_lY",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/productos/facturas",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos",
+						"facturas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDBhNTI2NWUwYjY2NDFiZjA3ZDUxNTciLCJpYXQiOjE2Nzg1MDM0MDIsImV4cCI6MTY3ODUwNzAwMn0.Ev_Osxu5utgrZGK-YYKgv4f7DWMz30Eiur6jz1EP_lY",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/productos/comprar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos",
+						"comprar"
 					]
 				}
 			},
